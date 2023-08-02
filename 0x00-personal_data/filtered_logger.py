@@ -3,9 +3,11 @@
 Task 0: Regex-ing
 Author: SenseiUC
 """
+import os
 import re
 from typing import List
 import logging
+import mysql.connector
 
 
 patterns = {
@@ -55,3 +57,20 @@ def filter_datum(
     """ Filters a log line. """
     extract, replace = (patterns["extract"], patterns["replace"])
     return re.sub(extract(fields, separator), replace(redaction), message)
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Creates a connector to a database.
+    """
+    db_host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = os.getenv("PERSONAL_DATA_DB_NAME", "")
+    db_user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    db_pwd = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    connection = mysql.connector.connect(
+        host=db_host,
+        port=3306,
+        user=db_user,
+        password=db_pwd,
+        database=db_name,
+    )
+    return connection
