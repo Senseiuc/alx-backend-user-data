@@ -3,6 +3,7 @@
 Basic_Auth Class: Task 4
 """
 import base64
+import binascii
 
 from api.v1.auth.auth import Auth
 
@@ -38,6 +39,6 @@ class BasicAuth(Auth):
             try:
                 res = base64.b64decode(base64_authorization_header)
                 return res.decode('utf-8')
-            except AttributeError:
+            except (binascii.Error, UnicodeDecodeError):
                 return None
         return None
