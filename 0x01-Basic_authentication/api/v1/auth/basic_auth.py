@@ -9,4 +9,14 @@ class BasicAuth(Auth):
     """
     A basic auth class
     """
-    pass
+
+    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+        """
+        Extracts the base64 authorise header
+        :param authorization_header: The authorised header string
+        :return: the Base64 part of the Authorization
+        """
+        if authorization_header and type(authorization_header) == str:
+            if authorization_header.startswith('Basic'):
+                return authorization_header.split(' ')[1]
+        return None
