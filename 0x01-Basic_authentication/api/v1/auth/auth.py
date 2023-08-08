@@ -21,8 +21,9 @@ class Auth:
         """
         if path is None or excluded_paths in [None, []]:
             return True
-        if path in excluded_paths or path+'/' in excluded_paths:
-            return False
+        for value in excluded_paths:
+            if value.startswith(path):
+                return False
         return True
 
     def authorization_header(self, request=None) -> str:
