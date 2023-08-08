@@ -58,7 +58,7 @@ class BasicAuth(Auth):
         d = decoded_base64_authorization_header
         if d and type(d) == str and ':' in d:
             try:
-                username, password = tuple(d.split(':'), 1)
+                username, password = tuple(d.split(':', 1))
                 return username, password
             except IndexError:
                 return None, None
