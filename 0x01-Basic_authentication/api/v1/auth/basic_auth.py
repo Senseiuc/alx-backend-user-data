@@ -2,6 +2,8 @@
 """
 Basic_Auth Class: Task 4
 """
+import base64
+
 from api.v1.auth.auth import Auth
 
 
@@ -34,7 +36,8 @@ class BasicAuth(Auth):
         """
         if base64_authorization_header and type(base64_authorization_header) == str:
             try:
-                return base64_authorization_header.decode('utf-8')
+                res = base64.b64decode(base64_authorization_header)
+                return res.decode('utf-8')
             except AttributeError:
                 return None
         return None
