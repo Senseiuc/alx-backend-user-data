@@ -6,4 +6,7 @@ from api.v1.auth import Auth
 
 
 class BasicAuth(Auth):
+    """
+    A basic auth class
+    """
     pass
