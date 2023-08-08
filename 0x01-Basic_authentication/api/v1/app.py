@@ -33,8 +33,8 @@ def handle_before_request():
     :return: None
     """
     paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
-    if auth is not None:
-        if auth.require_auth(request.path, paths) is None:
+    if auth:
+        if auth.require_auth(request.path, paths):
             if auth.authorization_header(request) is None:
                 abort(401)
             if auth.current_user(request) is None:
