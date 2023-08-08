@@ -35,9 +35,10 @@ class BasicAuth(Auth):
         :param base64_authorization_header: a base64 string
         :return: the decoded value of the Base64 string
         """
-        if base64_authorization_header and type(base64_authorization_header) == str:
+        b = base64_authorization_header
+        if b and type(b) == str:
             try:
-                res = base64.b64decode(base64_authorization_header)
+                res = base64.b64decode(b)
                 return res.decode('utf-8')
             except (binascii.Error, UnicodeDecodeError):
                 return None
