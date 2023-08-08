@@ -15,11 +15,15 @@ class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
         Checks if the required auth is given
-        :param path:
-        :param excluded_paths:
-        :return:
+        :param path: A string represent a path
+        :param excluded_paths: a list of paths
+        :return: False if path is in the excluded_paths list
         """
-        return False
+        if path is None or excluded_paths in [None, []]:
+            return True
+        if path in excluded_paths or path+'/' in excluded_paths:
+            return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """
