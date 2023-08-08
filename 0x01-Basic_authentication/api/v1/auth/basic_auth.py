@@ -24,3 +24,14 @@ class BasicAuth(Auth):
                 except IndexError:
                     return None
         return None
+
+    def decode_base64_authorization_header(
+            self, base64_authorization_header: str) -> str:
+        """
+        A function that decodes a base64 authorised header
+        :param base64_authorization_header: a base64 string
+        :return: the decoded value of the Base64 string
+        """
+        if base64_authorization_header and type(base64_authorization_header) == str:
+            base64_authorization_header.decode('utf-8')
+        return None
