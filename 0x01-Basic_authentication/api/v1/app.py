@@ -43,7 +43,6 @@ def handle_before_request():
                 abort(401)
             if user is None:
                 abort(403)
-            abort(403)
             request.current_user = user
 
 
