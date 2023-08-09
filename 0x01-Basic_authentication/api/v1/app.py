@@ -40,7 +40,7 @@ def handle_before_request():
         if auth.require_auth(request.path, paths):
             user = auth.current_user(request)
             if auth.authorization_header(request) is None:
-                abort(401)
+                abort(403)
             if user is None:
                 abort(403)
             request.current_user = user
