@@ -29,21 +29,21 @@ def not_found(error) -> str:
     return jsonify({"error": "Not found"}), 404
 
 
-@app.before_request
-def handle_before_request():
-    """
-    Handles_before_request
-    :return: None
-    """
-    paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
-    if auth:
-        if auth.require_auth(request.path, paths):
-            user = auth.current_user(request)
-            if auth.authorization_header(request) is None:
-                abort(403)
-            if user is None:
-                abort(403)
-            request.current_user = user
+# @app.before_request
+# def handle_before_request():
+#     """
+#     Handles_before_request
+#     :return: None
+#     """
+#     paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+#     if auth:
+#         if auth.require_auth(request.path, paths):
+#             user = auth.current_user(request)
+#             if auth.authorization_header(request) is None:
+#                 abort(401)
+#             if user is None:
+#                 abort(403)
+#             request.current_user = user
 
 
 @app.errorhandler(401)
