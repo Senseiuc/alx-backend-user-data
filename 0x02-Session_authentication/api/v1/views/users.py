@@ -4,15 +4,7 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
-
-
-@app_views.route('/users/me', methods=['GET'], strict_slashes=False)
-def get_me() -> str:
-    """ GET /api/v1/users
-    Return:
-      - the authenticated user object
-    """
-    return request.current_user
+from api.v1.app import auth
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def view_all_users() -> str:
@@ -35,12 +27,12 @@ def view_one_user(user_id: str = None) -> str:
     """
     if user_id is None:
         abort(404)
+    if user_id == 'me':
+        if request.current_user is None:
+            abort(404)
+        return jsonify(request.current_user.to_json())
     user = User.get(user_id)
     if user is None:
-        abort(404)
-    if user == get_me():
-        if request.current_user:
-            return jsonify((request.current_user).to_json)
         abort(404)
     return jsonify(user.to_json())
 
