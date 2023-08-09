@@ -43,6 +43,7 @@ def handle_before_request():
                 abort(401)
             if user is None:
                 abort(403)
+            abort(401,'in')
             setattr(request, "current_user", user)
             if request.current_user:
                 abort(401)
