@@ -7,7 +7,6 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 from api.v1.auth.auth import Auth
-from api.v1.auth.basic_auth import BasicAuth
 import os
 
 
@@ -18,8 +17,6 @@ auth = None
 auth_type = getenv('AUTH_TYPE', None)
 if auth_type == 'auth':
     auth = Auth()
-elif auth_type == 'basic_auth':
-    auth = BasicAuth()
 
 
 @app.errorhandler(404)
@@ -29,21 +26,19 @@ def not_found(error) -> str:
     return jsonify({"error": "Not found"}), 404
 
 
-# @app.before_request
-# def handle_before_request():
-#     """
-#     Handles_before_request
-#     :return: None
-#     """
-#     paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
-#     if auth:
-#         if auth.require_auth(request.path, paths):
-#             user = auth.current_user(request)
-#             if auth.authorization_header(request) is None:
-#                 abort(401)
-#             if user is None:
-#                 abort(403)
-#             request.current_user = user
+@app.before_request
+def handle_before_request():
+    """
+    Handles_before_request
+    :return: None
+    """
+    paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    if auth is not None:
+        if auth.require_auth(request.path, paths) is None:
+            if auth.authorization_header(request) is None:
+                abort(401)
+            if auth.current_user(request) is None:
+                abort(403)
 
 
 @app.errorhandler(401)
