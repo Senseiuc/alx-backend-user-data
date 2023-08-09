@@ -46,7 +46,6 @@ def handle_before_request():
             request.current_user = user
 
 
-
 @app.errorhandler(401)
 def unauthorised(error) -> str:
     """
