@@ -44,7 +44,7 @@ def handle_before_request():
             if user is None:
                 abort(403)
             request.current_user = user
-            abort(request)
+            abort(404, request)
 
 
 @app.errorhandler(401)
