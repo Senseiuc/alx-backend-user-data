@@ -2,9 +2,10 @@
 """
 SessionAuth: Task 1
 """
+from .auth import Auth
 
 
-class SessionAuth:
+class SessionAuth(Auth):
     """
     A class that authenticates using session
     """
