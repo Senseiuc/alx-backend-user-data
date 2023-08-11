@@ -4,6 +4,7 @@ SessionAuth: Task 1
 """
 from uuid import uuid4
 from .auth import Auth
+from models.user import User
 
 
 class SessionAuth(Auth):
@@ -31,3 +32,14 @@ class SessionAuth(Auth):
         """
         if type(session_id) == str:
             return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """
+        A function that returns a user object using the
+        cookie value
+        :param request: The request object
+        :return:The user object
+        """
+        session_id = self.session_cookie(request)
+        user_id = self.user_id_by_session_id.get(session_id)
+        return User.get(user_id)
