@@ -20,6 +20,6 @@ class SessionAuth(Auth):
         """
         if user_id is None or type(user_id) != str:
             return None
-
-        self.user_id_by_session_id[str(uuid4)] = user_id
-        return user_id
+        uuid_str = str(uuid4())
+        self.user_id_by_session_id[uuid_str] = user_id
+        return uuid_str
