@@ -3,7 +3,7 @@
 Task 10
 """
 from datetime import datetime, timedelta
-
+from flask import request
 from .session_auth import SessionAuth
 from os import getenv
 
@@ -13,14 +13,14 @@ class SessionExpAuth(SessionAuth):
     A Session Expiration Authentication Class
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize
         """
         super().__init__()
         try:
             self.session_duration = int(getenv('SESSION_DURATION', '0'))
-        except TypeError:
+        except Exception:
             self.session_duration = 0
 
     def create_session(self, user_id=None):
@@ -31,14 +31,13 @@ class SessionExpAuth(SessionAuth):
         :return: the session id created
         """
         session_id = super().create_session(user_id)
-        if type(session_id) != str:
-            return None
-        session_dictionary = {
-            'user_id': user_id,
-            'created_at': datetime.now()
-        }
-        self.user_id_by_session_id[session_id] = session_dictionary
-        return session_id
+        if type(session_id) == str:
+            session_dictionary = {
+                'user_id': user_id,
+                'created_at': datetime.now()
+            }
+            super().user_id_by_session_id[session_id] = session_dictionary
+            return session_id
 
     def user_id_for_session_id(self, session_id=None):
         """
@@ -46,8 +45,8 @@ class SessionExpAuth(SessionAuth):
         :param session_id: the session id
         :return: the user id
         """
-        if session_id in self.user_id_by_session_id:
-            session_dict = self.user_id_by_session_id[session_id]
+        if session_id in super().user_id_by_session_id:
+            session_dict = super().user_id_by_session_id[session_id]
             if self.session_duration <= 0:
                 return session_dict['user_id']
             if 'created_at' in session_dict:
