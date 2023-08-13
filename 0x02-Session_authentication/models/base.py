@@ -42,7 +42,7 @@ class Base():
             return False
         if not isinstance(self, Base):
             return False
-        return (self.id == other.id)
+        return self.id == other.id
 
     def to_json(self, for_serialization: bool = False) -> dict:
         """ Convert the object a JSON dictionary
