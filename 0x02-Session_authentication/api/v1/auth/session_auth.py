@@ -31,6 +31,8 @@ class SessionAuth(Auth):
         :return: the user id
         """
         if type(session_id) == str:
+            print(session_id, 'session id')
+            print(self.user_id_by_session_id, 'user_id')
             return self.user_id_by_session_id.get(session_id)
 
     def current_user(self, request=None):
