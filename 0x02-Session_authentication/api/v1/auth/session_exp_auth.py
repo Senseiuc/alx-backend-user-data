@@ -45,8 +45,8 @@ class SessionExpAuth(SessionAuth):
         :param session_id: the session id
         :return: the user id
         """
-        print(session_id, 'session_id')
         if session_id in self.user_id_by_session_id:
+            print(session_id, 'session_id')
             session_dict = self.user_id_by_session_id[session_id]
             if self.session_duration <= 0:
                 return session_dict['user_id']
