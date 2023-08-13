@@ -30,6 +30,7 @@ class SessionAuth(Auth):
         :param session_id: a user session id
         :return: the user id
         """
+        print(session_id, 'session id before if')
         if type(session_id) == str:
             print(session_id, 'session id')
             print(self.user_id_by_session_id, 'user_id')
