@@ -41,8 +41,8 @@ class SessionAuth(Auth):
         :return:The user object
         """
         session_id = self.session_cookie(request)
-        print(session_id, 'session_id')
         user_id = self.user_id_by_session_id.get(session_id)
+        print(user_id, 'user_id')
         return User.get(user_id)
 
     def destroy_session(self, request=None):
