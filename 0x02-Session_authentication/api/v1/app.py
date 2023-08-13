@@ -44,9 +44,9 @@ def handle_before_request():
     paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/',
              '/api/v1/auth_session/login/']
     if auth:
-        print(request)
-        abort(404)
         if auth.require_auth(request.path, paths):
+            print(request)
+            abort(404)
             user = auth.current_user(request)
             print(user)
             if auth.authorization_header(request) is None\
