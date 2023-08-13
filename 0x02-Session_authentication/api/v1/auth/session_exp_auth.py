@@ -36,7 +36,7 @@ class SessionExpAuth(SessionAuth):
                 'user_id': user_id,
                 'created_at': datetime.now()
             }
-            super().user_id_by_session_id[session_id] = session_dictionary
+            self.user_id_by_session_id[session_id] = session_dictionary
             return session_id
 
     def user_id_for_session_id(self, session_id=None):
@@ -45,8 +45,9 @@ class SessionExpAuth(SessionAuth):
         :param session_id: the session id
         :return: the user id
         """
-        if session_id in super().user_id_by_session_id:
-            session_dict = super().user_id_by_session_id[session_id]
+        print(session_id, 'session_id')
+        if session_id in self.user_id_by_session_id:
+            session_dict = self.user_id_by_session_id[session_id]
             if self.session_duration <= 0:
                 return session_dict['user_id']
             if 'created_at' in session_dict:
