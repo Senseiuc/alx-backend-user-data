@@ -47,13 +47,13 @@ class SessionExpAuth(SessionAuth):
         """
         if session_id in self.user_id_by_session_id:
             session_dict = self.user_id_by_session_id[session_id]
-            print(session_dict, 'self_dict')
-            print(self.session_duration, 'duration')
             if self.session_duration <= 0:
                 return session_dict['user_id']
             if 'created_at' in session_dict:
                 cur_time = datetime.now()
                 session_time = timedelta(seconds=self.session_duration)
                 expiration_time = session_dict['created_at'] + session_time
+                print(cur_time, 'current time')
+                print(expiration_time, 'expiration time')
                 if cur_time >= expiration_time:
                     return session_dict['user_id']
